@@ -41,26 +41,26 @@ public class DoubleDataFrame<T> {
 		return values.get(row, column);
 	}
 
-	public double[] getRowValues(T index) {
+	public DoubleMatrix getRowValues(T index) {
 		int r = indexes.indexOf(index);
 		DoubleMatrix result = new DoubleMatrix(columns, 1);
 		values.getRow(r, result);
-		double[] rowValues = new double[columns];
-		for (int i = 0; i < columns; i++) {
-			rowValues[i] = result.get(i, 0);
-		}
-		return rowValues;
+		// double[] rowValues = new double[columns];
+		// for (int i = 0; i < columns; i++) {
+		// rowValues[i] = result.get(i, 0);
+		// }
+		return result;
 	}
 
-	public double[] getColumnValues(String label) {
+	public DoubleMatrix getColumnValues(String label) {
 		int c = labels.indexOf(label);
 		DoubleMatrix result = new DoubleMatrix(rows, 1);
 		values.getColumn(c, result);
-		double[] colValues = new double[rows];
-		for (int i = 0; i < rows; i++) {
-			colValues[i] = result.get(i, 0);
-		}
-		return colValues;
+		// double[] colValues = new double[rows];
+		// for (int i = 0; i < rows; i++) {
+		// colValues[i] = result.get(i, 0);
+		// }
+		return result;
 	}
 
 	public List<T> getIndexes() {
