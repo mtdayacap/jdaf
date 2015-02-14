@@ -1,11 +1,12 @@
 package org.jdaf;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.jblas.DoubleMatrix;
 import org.junit.After;
@@ -40,6 +41,7 @@ public class DoubleDataFrameTest {
 		labels.add("C");
 		DoubleDataFrame<Date> df = new DoubleDataFrame<Date>(dateIndex, values, labels);
 		Double val = df.get(date1, "A");
+		assertEquals(1.1d, val, 0);
 		System.out.println("val: " + val);
 		
 		double[] rowVals = df.getRowValues(date1);
