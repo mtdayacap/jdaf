@@ -1,6 +1,7 @@
 package org.jdaf;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -96,5 +97,191 @@ public class DoubleDataFrameTest {
 	public void testValuesInDoubleMatrix() throws ParseException {
 		DoubleMatrix vals = df.getValues();
 		assertEquals(values, vals);
+	}
+
+	@Test
+	public void testEqualityWithEqualObjects() {
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes = new ArrayList<Integer>(2);
+		indexes.add(1);
+		indexes.add(2);
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+
+		DoubleMatrix values2 = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes2 = new ArrayList<Integer>(2);
+		indexes2.add(1);
+		indexes2.add(2);
+		List<String> labels2 = new ArrayList<String>(3);
+		labels2.add("one");
+		labels2.add("two");
+		labels2.add("three");
+
+		DoubleDataFrame<Integer> f1 = new DoubleDataFrame<Integer>(indexes,
+				values, labels);
+		DoubleDataFrame<Integer> f2 = new DoubleDataFrame<Integer>(indexes2,
+				values2, labels2);
+
+		assertEquals(f1, f2);
+	}
+
+	@Test
+	public void testEqualityWithValuesNotEqualObjects() {
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes = new ArrayList<Integer>(2);
+		indexes.add(1);
+		indexes.add(2);
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+
+		DoubleDataFrame<Integer> f1 = new DoubleDataFrame<Integer>(indexes,
+				values, labels);
+
+		DoubleMatrix values2 = new DoubleMatrix(new double[][] { { 1, 9, 3 },
+				{ 4, 7, 6 } });
+		List<Integer> indexes2 = new ArrayList<Integer>(2);
+		indexes2.add(1);
+		indexes2.add(2);
+		List<String> labels2 = new ArrayList<String>(3);
+		labels2.add("one");
+		labels2.add("two");
+		labels2.add("three");
+
+		DoubleDataFrame<Integer> f2 = new DoubleDataFrame<Integer>(indexes2,
+				values2, labels2);
+
+		assertNotEquals(f1, f2);
+	}
+
+	@Test
+	public void testEqualityWithLabelsNotEqual() {
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes = new ArrayList<Integer>(2);
+		indexes.add(1);
+		indexes.add(2);
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+
+		DoubleDataFrame<Integer> f1 = new DoubleDataFrame<Integer>(indexes,
+				values, labels);
+
+		DoubleMatrix values2 = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes2 = new ArrayList<Integer>(2);
+		indexes2.add(1);
+		indexes2.add(2);
+		List<String> labels2 = new ArrayList<String>(3);
+		labels2.add("one");
+		labels2.add("two");
+		labels2.add("four"); // Different
+
+		DoubleDataFrame<Integer> f2 = new DoubleDataFrame<Integer>(indexes2,
+				values2, labels2);
+
+		assertNotEquals(f1, f2);
+
+	}
+
+	@Test
+	public void testEqualityWithIndexesNotEqual() {
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes = new ArrayList<Integer>(2);
+		indexes.add(1);
+		indexes.add(2);
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+
+		DoubleDataFrame<Integer> f1 = new DoubleDataFrame<Integer>(indexes,
+				values, labels);
+
+		DoubleMatrix values2 = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes2 = new ArrayList<Integer>(2);
+		indexes2.add(1);
+		indexes2.add(3);
+		List<String> labels2 = new ArrayList<String>(3);
+		labels2.add("one");
+		labels2.add("two");
+		labels2.add("three"); // Different
+
+		DoubleDataFrame<Integer> f2 = new DoubleDataFrame<Integer>(indexes2,
+				values2, labels2);
+
+		assertNotEquals(f1, f2);
+
+	}
+
+	@Test
+	public void testEqualHashCodeWithEqualsEqual() {
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes = new ArrayList<Integer>(2);
+		indexes.add(1);
+		indexes.add(2);
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+
+		DoubleMatrix values2 = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 } });
+		List<Integer> indexes2 = new ArrayList<Integer>(2);
+		indexes2.add(1);
+		indexes2.add(2);
+		List<String> labels2 = new ArrayList<String>(3);
+		labels2.add("one");
+		labels2.add("two");
+		labels2.add("three");
+
+		DoubleDataFrame<Integer> f1 = new DoubleDataFrame<Integer>(indexes,
+				values, labels);
+		DoubleDataFrame<Integer> f2 = new DoubleDataFrame<Integer>(indexes2,
+				values2, labels2);
+
+		// If equals() are equal then hashcode()s are equal
+		assertEquals(f1, f2);
+		assertEquals(f1.hashCode(), f2.hashCode());
+	}
+
+	@Test
+	public void testPutValueInRowRange() {
+		int firstIndex = 0;
+		int lastIndex = 2;
+		double value = 9;
+		List<Integer> index = new ArrayList<Integer>(3);
+		index.add(1);
+		index.add(2);
+		index.add(3);
+		DoubleMatrix values = new DoubleMatrix(new double[][] { { 1, 2, 3 },
+				{ 4, 5, 6 }, { 7, 8, 9 } });
+		List<String> labels = new ArrayList<String>(3);
+		labels.add("one");
+		labels.add("two");
+		labels.add("three");
+		DoubleDataFrame<Integer> df = new DoubleDataFrame<Integer>(index,
+				values, labels);
+		
+		// Expected
+		DoubleMatrix expValues = new DoubleMatrix(new double[][] { { 9, 9, 9 },
+				{ 9, 9, 9 }, { 7, 8, 9 } });
+		DoubleDataFrame<Integer> expDf = new DoubleDataFrame<Integer>(index, expValues, labels);
+		
+		// Method under test
+		df.putRowValue(firstIndex, lastIndex, value);
+		
+		assertEquals(expDf, df);
 	}
 }
