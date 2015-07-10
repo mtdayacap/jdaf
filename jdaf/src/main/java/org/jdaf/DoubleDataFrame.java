@@ -1,6 +1,7 @@
 package org.jdaf;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -30,6 +31,22 @@ public class DoubleDataFrame<I> {
 		set.addAll(index);
 		this.indexes = new ArrayList<I>(set);
 		setFields(index, values, labels);
+	}
+
+	public DoubleDataFrame(List<I> indexes, DoubleMatrix values) {
+		TreeSet<I> set = new TreeSet<I>();
+		set.addAll(indexes);
+		this.indexes = new ArrayList<I>(set);
+
+		this.values = values;
+		
+		// Build default column labels
+		int cols = values.columns;
+		List<String> labels = new ArrayList<String>();
+		for (int i = 0; i < cols; i++) {
+			labels.add(Integer.toString(i));
+		}
+		this.labels = labels;
 	}
 
 	public DoubleDataFrame<I> dup() {
